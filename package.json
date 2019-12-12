@@ -1,11 +1,11 @@
 {
-  "name": "ts-react-test",
+  "name": "check-it-app",
   "version": "0.0.1",
-  "description": "Testing",
-  "main": "src/testing.ts",
+  "description": "App for checking websites",
+  "main": "src/index.tsx",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ihansson/ts-react-test.git"
+    "url": "git+https://github.com/ihansson/check-it-app.git"
   },
   "scripts": {
     "watch": "cross-env NODE_ENV=development rollup -cw",
@@ -20,7 +20,7 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ihansson/ts-react-test/issues"
+    "url": "https://github.com/ihansson/check-it-app/issues"
   },
   "dependencies": {
     "react": "^16.12.0",
