@@ -33,7 +33,7 @@ button {
 .App- {
 
 	&page {
-  		background: linear-gradient(to right, #606c88, #3f4c6b);
+  		background: #11998e;
 		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
@@ -41,6 +41,7 @@ button {
 		justify-content: center;
 		padding: 1.5em;
 		font-size: calc(7px + 1vmin);
+		line-height: 1.65em;
 	}
 
 	&box {
@@ -56,29 +57,34 @@ button {
 	}
 
 	&input-line {
-		margin: 0.75em 0 0;
+		margin: 1.5em 0 0;
 		border: 0px;
 		width: 100%;
 		padding: 5px 0;
 		background: none;
 		outline: 0;
-		border-bottom: 0.15em solid $color;
+		border-bottom: 0.1em solid rgba(39,48,69,0.15);
 		font-size: 1em;
 		color: $color;
 		&::placeholder {
-			color: rgba(39,48,69,0.85);
+			color: rgba(39,48,69,0.65);
 		}
 	}
 
 	&button {
 		background: $color;
 		color: white;
-		margin-top: 1.5em;
+		margin-top: 2.5em;
 		border: 0px;
 		border-radius: 2em;
 		width: 100%;
 		font-size: 1em;
 		padding: 1.3em 0.5em;
+		outline: 0;
+		cursor: pointer;
+		&:hover {
+			background: #11998e;
+		}
 	}
 
 	&error {
