@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Login.scss';
 
 interface LoginErrors {
 	username: Error
@@ -12,7 +13,8 @@ interface Error {
 
 interface FieldProps {
 	errors: LoginErrors
-	attribute: string
+	attribute: string,
+	value: string,
 	children: any
 }
 
@@ -20,12 +22,12 @@ const Field: React.FC<FieldProps> = (props: FieldProps) => {
 	const error = props.errors[props.attribute as keyof LoginErrors];
 	return (
 		<div>
-			{ !error.valid && 
-				<div>
+			{props.children}
+			{ !error.valid && props.value &&
+				<div className="App-error">
 					{error.message} 
 				</div>
 			}
-			{props.children}
 		</div>
 	);
 }
@@ -39,12 +41,12 @@ function useErrors(fields: FieldError[]): LoginErrors {
 
   const [ errors, setErrors ] = useState({
   	'username' : {
-  		'valid' : true,
-  		'message' : ''
+  		'valid' : false,
+  		'message' : 'too short'
   	},
   	'password' : {
-  		'valid' : true,
-  		'message' : ''
+  		'valid' : false,
+  		'message' : 'too short'
   	}
   } as LoginErrors);
 
@@ -55,14 +57,14 @@ function useErrors(fields: FieldError[]): LoginErrors {
 			let valid = true;
 			let message = '';
 
-			if(type === 'username' && value.length > 6){
+			if(type === 'username' && value.length < 6){
 				valid = false;
-				message = 'too long'
+				message = 'too short'
 			}
 
-			if(type === 'password' && value.length > 3){
+			if(type === 'password' && value.length < 6){
 				valid = false;
-				message = 'too long'
+				message = 'too short'
 			}
 
 			const _errors = errors;
@@ -86,6 +88,8 @@ function useErrors(fields: FieldError[]): LoginErrors {
 
 const Login: React.FC = () => {
 
+  const [ loading, setLoading ] = useState(false);
+
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
 
@@ -100,20 +104,48 @@ const Login: React.FC = () => {
 	  }
   ])
 
+  const valid = Object.values(errors).reduce((current: boolean, field: Error) => {
+  	return !current ? false : field.valid;
+  }, true);
+
   const setValue = (fn: (value: string) => void, validationType: string) => {
   	return (e: any) => {
   		fn(e.target.value);
   	}
   }
 
+  let timeout: boolean |  ReturnType<typeof setTimeout> = false;
+
+  const submitForm = (e: any) => {
+  	e.preventDefault();
+  	setLoading(true);
+  	if(timeout) {
+  		clearTimeout(timeout as ReturnType<typeof setTimeout>);
+  	}
+  	timeout = setTimeout(() => {
+  		setLoading(false);
+  	}, 250)
+  	return false;
+  }
+
   return (
-    <div className="login">
-    	<Field errors={errors} attribute='username'>
-    		<input type="text" onChange={setValue(setUsername, 'username')} value={ username } />
-    	</Field>
-    	<Field errors={errors} attribute='password'>
-    		<input type="text" onChange={setValue(setPassword, 'password')} value={ password } />
-    	</Field>
+    <div className="App-page">
+    	<div className="App-box">
+    		<h1>Login</h1>
+    		<p>Integer interdum nisl in arcu pharetra, quis dignissim.</p>
+	    	<form onSubmit={submitForm}>
+		    	<Field errors={errors} attribute='username' value={username}>
+		    		<input className="App-input-line" placeholder="Username" type="text" onChange={setValue(setUsername, 'username')} value={ username } />
+		    	</Field>
+		    	<Field errors={errors} attribute='password' value={password}>
+		    		<input className="App-input-line" placeholder="Password" type="text" onChange={setValue(setPassword, 'password')} value={ password } />
+		    	</Field>
+		    	<button className="App-button" disabled={!valid}>
+		    		{ loading && 'Loading' }
+		    		{ !loading && 'Submit' }
+		    	</button>
+	    	</form>
+    	</div>
     </div>
   );
 }
