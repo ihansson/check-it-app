@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import SVG from 'react-inlinesvg';
 import './Login.scss';
 
 interface LoginErrors {
@@ -89,6 +90,7 @@ function useErrors(fields: FieldError[]): LoginErrors {
 const Login: React.FC = () => {
 
   const [ loading, setLoading ] = useState(false);
+  const [ done, setDone ] = useState(false);
 
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
@@ -124,7 +126,8 @@ const Login: React.FC = () => {
   	}
   	timeout = setTimeout(() => {
   		setLoading(false);
-  	}, 250)
+  		setDone(true);
+  	}, 1500)
   	return false;
   }
 
@@ -135,17 +138,19 @@ const Login: React.FC = () => {
     		<p>Integer interdum nisl in arcu pharetra, quis dignissim.</p>
 	    	<form onSubmit={submitForm}>
 		    	<Field errors={errors} attribute='username' value={username}>
-		    		<input className="App-input-line" placeholder="Username" type="text" onChange={setValue(setUsername, 'username')} value={ username } />
+		    		<input className="App-input-line App-input-username" placeholder="Username" type="text" onChange={setValue(setUsername, 'username')} value={ username } />
 		    	</Field>
 		    	<Field errors={errors} attribute='password' value={password}>
-		    		<input className="App-input-line" placeholder="Password" type="text" onChange={setValue(setPassword, 'password')} value={ password } />
+		    		<input className="App-input-line App-input-password" placeholder="Password" type="text" onChange={setValue(setPassword, 'password')} value={ password } />
 		    	</Field>
 		    	<button className="App-button" disabled={!valid}>
-		    		{ loading && 'Loading' }
-		    		{ !loading && 'Submit' }
+		    		{ done && <SVG src="icons/check.svg" alt="Loading" /> }
+		    		{ loading && !done && <SVG src="icons/loading.svg" className="App-loading" alt="Loading" /> }
+		    		{ !loading && !done && 'Submit' }
 		    	</button>
 	    	</form>
     	</div>
+    	<p className="App-copyright">&copy; 2019 Something</p>
     </div>
   );
 }

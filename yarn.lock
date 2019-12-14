@@ -1198,6 +1198,12 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-inlinesvg@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react-inlinesvg/-/react-inlinesvg-1.0.0.tgz#c7c1e24afe26e67ae7608ab4b3a6ff3ede3b0782"
+  dependencies:
+    react-inlinesvg "*"
+
 "@types/react-redux@^7.1.5":
   version "7.1.5"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.5.tgz#c7a528d538969250347aa53c52241051cf886bd3"
@@ -3529,6 +3535,10 @@ execa@^1.0.0:
     p-finally "^1.0.0"
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
+
+exenv@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
 
 exit@^0.1.2:
   version "0.1.2"
@@ -7557,6 +7567,17 @@ react-dom@^16.12.0:
 react-error-overlay@^6.0.4:
   version "6.0.4"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.4.tgz#0d165d6d27488e660bc08e57bdabaad741366f7a"
+
+react-from-dom@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-from-dom/-/react-from-dom-0.3.0.tgz#559b2706fba072bf686e30e064369011b727bddf"
+
+react-inlinesvg@*, react-inlinesvg@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-inlinesvg/-/react-inlinesvg-1.2.0.tgz#fa63bda004ed941449a034574269ad4819cdbc8d"
+  dependencies:
+    exenv "^1.2.2"
+    react-from-dom "^0.3.0"
 
 react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
   version "16.12.0"

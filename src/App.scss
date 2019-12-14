@@ -56,6 +56,12 @@ button {
 		box-shadow: 0px 6px 1px rgba(195,195,195,1), 0 10px 25px rgba(0,0,0,0.3), 0px 10px 5px rgba(0,0,0,0.3);
 	}
 
+	&copyright {
+		color: rgba(255,255,255,0.5);
+		font-size: 0.85em;
+		margin: 1.5em 0;
+	}
+
 	&input-line {
 		margin: 1.5em 0 0;
 		border: 0px;
@@ -71,6 +77,19 @@ button {
 		}
 	}
 
+	&input-username,
+	&input-password {
+		background-image: url('/icons/user.svg');
+		background-size: 1.2em 1.2em;
+		background-repeat: no-repeat;
+		background-position: left center;
+		padding-left: 2em;
+	}
+
+	&input-password {
+		background-image: url('/icons/lock.svg');
+	}
+
 	&button {
 		background: $color;
 		color: white;
@@ -82,6 +101,15 @@ button {
 		padding: 1.3em 0.5em;
 		outline: 0;
 		cursor: pointer;
+		transition: all .15s;
+		svg {
+			margin: -0.5em auto;
+			width: 2em;
+			height: 2em;
+			* {
+				stroke: white;
+			}
+		}
 		&:hover {
 			background: #11998e;
 		}
@@ -93,4 +121,25 @@ button {
 		margin-top: 0.25em
 	}
 
+	&loading {
+		* {
+		    stroke-dasharray: 50%;
+		    stroke-dashoffset: 0;
+		    transform-origin: center;
+		    stroke-width: 1;
+		    stroke-linecap: round;
+		    animation: spinner 0.5s linear infinite;
+		}
+	}
+
+}
+
+@keyframes spinner {
+    0% {
+        stroke-dashoffset: 0%;
+    }
+
+    100% {
+        stroke-dashoffset: 100%;
+    }
 }
