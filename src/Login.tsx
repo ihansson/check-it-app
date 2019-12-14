@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface LoginErrors {
 	username: Error
@@ -17,7 +17,7 @@ interface FieldProps {
 }
 
 const Field: React.FC<FieldProps> = (props: FieldProps) => {
-	const error = (props as any).errors[props.attribute];
+	const error = props.errors[props.attribute as keyof LoginErrors];
 	return (
 		<div>
 			{ !error.valid && 
@@ -30,7 +30,12 @@ const Field: React.FC<FieldProps> = (props: FieldProps) => {
 	);
 }
 
-const Login: React.FC = () => {
+interface FieldError {
+	type: string
+	value: any
+}
+
+function useErrors(fields: FieldError[]): LoginErrors {
 
   const [ errors, setErrors ] = useState({
   	'username' : {
@@ -43,39 +48,61 @@ const Login: React.FC = () => {
   	}
   } as LoginErrors);
 
+  useEffect(() => {
+
+		const validate = (type: string, value: string): void => {
+
+			let valid = true;
+			let message = '';
+
+			if(type === 'username' && value.length > 6){
+				valid = false;
+				message = 'too long'
+			}
+
+			if(type === 'password' && value.length > 3){
+				valid = false;
+				message = 'too long'
+			}
+
+			const _errors = errors;
+
+			(_errors as any)[type] = {
+				valid,
+				message
+			};
+
+			setErrors(_errors)
+
+		}
+
+		fields.map(field => validate(field.type, field.value));
+
+  }, [errors, fields]);
+
+  return errors;
+
+}
+
+const Login: React.FC = () => {
+
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
 
-  const validate = (type: string, value: string): void => {
-
-  	let valid = true;
-  	let message = '';
-
-  	if(type === 'username' && value.length > 6){
-  		valid = false;
-  		message = 'too long'
-  	}
-
-  	if(type === 'password' && value.length > 3){
-  		valid = false;
-  		message = 'too long'
-  	}
-
-  	const _errors = errors;
-
-  	(_errors as any)[type] = {
-  		valid,
-  		message
-  	};
-
-  	setErrors(_errors)
-
-  }
+  const errors = useErrors([
+	  {
+	  	type: 'username',
+	  	value: username	
+	  },
+	  {
+	  	type: 'password',
+	  	value: password	
+	  }
+  ])
 
   const setValue = (fn: (value: string) => void, validationType: string) => {
   	return (e: any) => {
   		fn(e.target.value);
-  		validate(validationType, e.target.value);
   	}
   }
 
