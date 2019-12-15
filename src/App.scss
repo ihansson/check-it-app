@@ -30,6 +30,11 @@ button {
 	box-sizing: border-box
 }
 
+a {
+	text-decoration: none;
+	color: $color;
+}
+
 .App- {
 
 	&page {
@@ -153,6 +158,11 @@ button {
 		&-menu {
 			max-width: 11em;
 			background: linear-gradient(45deg, rgba(0,0,0,0.1) 0%, rgba(255,255,255,1) 100%);
+		}
+		&-nav {
+			a {
+				display: block;
+			}
 		}
 		&-messages {
 			max-width: 16em;
