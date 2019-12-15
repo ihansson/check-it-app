@@ -102,6 +102,13 @@ button {
 		outline: 0;
 		cursor: pointer;
 		transition: all .15s;
+		&.App-button-loading,
+		&.App-button-done {
+			width: 6em;
+		}
+		&.App-button-done {
+			background: #11998e;
+		}
 		svg {
 			margin: -0.5em auto;
 			width: 2em;
@@ -126,8 +133,6 @@ button {
 		    stroke-dasharray: 50%;
 		    stroke-dashoffset: 0;
 		    transform-origin: center;
-		    stroke-width: 1;
-		    stroke-linecap: round;
 		    animation: spinner 0.5s linear infinite;
 		}
 	}

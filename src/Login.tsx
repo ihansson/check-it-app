@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import SVG from 'react-inlinesvg';
+import { useHistory } from "react-router-dom";
+import { Loading, Success } from './Icons';
 import './Login.scss';
 
 interface LoginErrors {
@@ -89,8 +90,9 @@ function useErrors(fields: FieldError[]): LoginErrors {
 
 const Login: React.FC = () => {
 
-  const [ loading, setLoading ] = useState(false);
-  const [ done, setDone ] = useState(false);
+  const history = useHistory();
+
+  const [ status, setStatus ] = useState('default');
 
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
@@ -120,13 +122,15 @@ const Login: React.FC = () => {
 
   const submitForm = (e: any) => {
   	e.preventDefault();
-  	setLoading(true);
+  	setStatus('loading');
   	if(timeout) {
   		clearTimeout(timeout as ReturnType<typeof setTimeout>);
   	}
   	timeout = setTimeout(() => {
-  		setLoading(false);
-  		setDone(true);
+  		setStatus('done');
+  		setTimeout(() => {
+    		history.push("/dashboard");
+  		}, 300)
   	}, 1500)
   	return false;
   }
@@ -143,10 +147,10 @@ const Login: React.FC = () => {
 		    	<Field errors={errors} attribute='password' value={password}>
 		    		<input className="App-input-line App-input-password" placeholder="Password" type="text" onChange={setValue(setPassword, 'password')} value={ password } />
 		    	</Field>
-		    	<button className="App-button" disabled={!valid}>
-		    		{ done && <SVG src="icons/check.svg" alt="Loading" /> }
-		    		{ loading && !done && <SVG src="icons/loading.svg" className="App-loading" alt="Loading" /> }
-		    		{ !loading && !done && 'Submit' }
+		    	<button className={['App-button', 'App-button-'+status].join(' ')} disabled={valid}>
+		    		{ status === 'done' && <Success /> }
+		    		{ status === 'loading' && <Loading /> }
+		    		{ status === 'default' && 'Submit' }
 		    	</button>
 	    	</form>
     	</div>
