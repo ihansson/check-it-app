@@ -10,7 +10,7 @@ import {
 
 const App: React.FC = () => {
 	return (
-		<div className="App">
+		<div className="App-page">
 			<Router>
 				<Switch>
 					<Route path="/dashboard">

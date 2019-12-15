@@ -136,8 +136,8 @@ const Login: React.FC = () => {
   }
 
   return (
-    <div className="App-page">
-    	<div className="App-box">
+    <div className="App-login">
+    	<div className="App-box App-box-small">
     		<h1>Login</h1>
     		<p>Integer interdum nisl in arcu pharetra, quis dignissim.</p>
 	    	<form onSubmit={submitForm}>
